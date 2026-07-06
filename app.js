@@ -19,6 +19,47 @@ const state = {
 const $ = (sel) => document.querySelector(sel);
 const wrongKey = (packId) => `sonpyeong_wrong_${packId}`;
 
+function escapeHtml(value){
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function getNoteLinks(pack){
+  if(!pack) return [];
+  if(Array.isArray(pack.noteLinks) && pack.noteLinks.length){
+    return pack.noteLinks
+      .map(link => ({
+        label: link.label || "PDF 노트 보기",
+        href: link.file || link.href || link.url,
+        download: Boolean(link.download)
+      }))
+      .filter(link => link.href);
+  }
+  if(pack.notePdf){
+    return [
+      { label: pack.noteLabel || "암기노트 보기", href: pack.notePdf, download: false },
+      { label: pack.noteDownloadLabel || "PDF 정리노트 다운로드", href: pack.notePdf, download: true }
+    ];
+  }
+  return [];
+}
+
+function renderNoteButtons(links){
+  return links.map(link => {
+    const downloadAttr = link.download ? " download" : "";
+    const targetAttr = link.download ? "" : ' target="_blank" rel="noopener"';
+    return `<a class="secondary-btn note-link" href="${escapeHtml(link.href)}"${targetAttr}${downloadAttr}>${escapeHtml(link.label)}</a>`;
+  }).join("");
+}
+
+function setNoteActions(id, links){
+  const el = $("#" + id);
+  if(el) el.innerHTML = renderNoteButtons(links);
+}
+
 function normalizeAnswer(value){
   return String(value ?? "")
     .trim()
@@ -133,11 +174,11 @@ function renderPacks(){
 }
 
 function renderPackNoteLinks(pack){
-  if(!pack.notePdf) return "";
+  const links = getNoteLinks(pack);
+  if(!links.length) return "";
   return `
     <div class="pack-note-actions">
-      <a class="secondary-btn note-link" href="${pack.notePdf}" target="_blank" rel="noopener">1~5강 암기노트 보기</a>
-      <a class="secondary-btn note-link" href="${pack.notePdf}" download>PDF 정리노트 다운로드</a>
+      ${renderNoteButtons(links)}
     </div>
   `;
 }
@@ -161,23 +202,26 @@ async function selectPack(packId){
 }
 
 function updateNoteLinks(){
-  const href = state.selectedPackMeta?.notePdf || "";
-  const hasNote = Boolean(href);
+  const links = getNoteLinks(state.selectedPackMeta);
+  const primary = links[0];
+  const hasNote = Boolean(primary);
   ["modeNotePanel"].forEach(id => $("#" + id).classList.toggle("hidden", !hasNote));
-  [
-    "modeNoteView",
-    "modeNoteDownload",
-    "level0NoteLink",
-    "playNoteView",
-    "playNoteDownload",
-    "resultNoteView",
-    "resultNoteDownload"
-  ].forEach(id => {
-    const el = $("#" + id);
-    if(!el) return;
-    el.href = hasNote ? href : "#";
-    el.classList.toggle("hidden", !hasNote);
-  });
+  setNoteActions("modeNoteActions", links);
+  setNoteActions("playNoteActions", links);
+  setNoteActions("resultNoteActions", links);
+  const level0 = $("#level0NoteLink");
+  if(level0){
+    level0.href = hasNote ? primary.href : "#";
+    level0.classList.toggle("hidden", !hasNote);
+    const label = primary?.label || "암기노트";
+    level0.innerHTML = `<b>레벨 0 암기노트 먼저 보기</b><span>${escapeHtml(label)}로 먼저 익숙하게</span>`;
+  }
+  const title = $("#modeNoteTitle");
+  if(title) title.textContent = state.selectedPackMeta?.noteTitle || "정리노트";
+  const desc = $("#modeNoteDesc");
+  if(desc){
+    desc.textContent = state.selectedPackMeta?.noteDescription || "처음 보는 용어는 노트로 익숙해지고, 문제에서 바로 꺼내는 순서로 훈련하세요.";
+  }
   const playNotePanel = $("#playNotePanel");
   if(playNotePanel){
     playNotePanel.classList.toggle("hidden", !(hasNote && state.mode === "wrong"));

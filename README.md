@@ -2,7 +2,7 @@
 
 손해평가사 40~60대 수험생을 위한 문제팩 분리형 정적 웹앱입니다. GitHub Pages에 그대로 올릴 수 있고, 앱은 처음에 문제팩 목록만 불러온 뒤 사용자가 선택한 문제팩 데이터만 추가로 불러옵니다.
 
-현재 공개 테스트판에는 `1~5강 기초용어·보험기초 120제`와 `1~5강 PDF 암기노트`가 연결되어 있습니다.
+현재 공개판에는 `01팩 1~5강 기초용어·보험기초 120제`와 `02팩 6~10강 농작물재해보험·손해평가·벼맥류 계산 120제`가 연결되어 있습니다.
 
 ## 학습 레벨 구조
 
@@ -42,7 +42,7 @@ GitHub Pages 배포 URL을 구글 사이트의 `삽입 > URL`에 넣거나 ifram
 
 1. 새 PDF 파일을 `downloads/` 폴더에 넣습니다.
 2. 기존 파일을 교체하려면 파일명을 `sonpyeong_pack01_note.pdf`로 유지합니다.
-3. 파일명을 바꾸는 경우 `data/manifest.json`의 `notePdf` 값을 새 경로로 수정합니다.
+3. 파일명을 바꾸는 경우 `data/manifest.json`의 `notePdf` 또는 `noteLinks` 값을 새 경로로 수정합니다.
 
 현재 연결 경로:
 
@@ -50,14 +50,14 @@ GitHub Pages 배포 URL을 구글 사이트의 `삽입 > URL`에 넣거나 ifram
 "notePdf": "downloads/sonpyeong_pack01_note.pdf"
 ```
 
-`notePdf`는 문제팩 카드, 훈련 모드 선택 화면, 오답 재도전 화면, 결과 화면의 PDF 보기/다운로드 버튼에 사용됩니다. 값이 없으면 해당 문제팩에서는 노트 버튼을 숨길 수 있습니다.
+`notePdf`는 PDF가 1개인 문제팩에 사용합니다. PDF가 여러 개인 문제팩은 `noteLinks` 배열에 버튼 문구와 파일 경로를 함께 적습니다. 값이 없으면 해당 문제팩에서는 노트 버튼을 숨길 수 있습니다.
 
 ## 새 문제팩 추가 방법
 
 1. `data/q_06_10.json` 같은 새 문제 데이터 파일을 만듭니다.
 2. 아래 스키마에 맞춰 `questions` 배열을 채웁니다.
 3. `data/manifest.json`의 `packs` 배열에 새 문제팩 정보를 추가합니다.
-4. PDF 노트가 있으면 `downloads/`에 넣고 `notePdf` 필드를 함께 적습니다.
+4. PDF 노트가 있으면 `downloads/`에 넣고 `notePdf` 또는 `noteLinks` 필드를 함께 적습니다.
 
 ## manifest.json 예시
 
@@ -70,7 +70,12 @@ GitHub Pages 배포 URL을 구글 사이트의 `삽입 > URL`에 넣거나 ifram
   "questionCount": 120,
   "level": "기초",
   "free": true,
-  "notePdf": "downloads/sonpyeong_pack02_note.pdf"
+  "noteLinks": [
+    {
+      "label": "왕초보 워밍업 노트 보기",
+      "file": "downloads/sonp_pack02_beginner_warmup_note_v1_final.pdf"
+    }
+  ]
 }
 ```
 
@@ -80,7 +85,7 @@ GitHub Pages 배포 URL을 구글 사이트의 `삽입 > URL`에 넣거나 ifram
 - `pack`: 문제팩 번호
 - `lesson`: 강의 번호
 - `category`: 기초용어, 보험기초 등
-- `type`: `short`, `ox`, `mcq`, `calc`
+- `type`: `short`, `ox`, `mcq`, `calc`, `case`
 - `question`: 문제
 - `answer`: 정답
 - `aliases`: 허용 정답 목록
@@ -104,7 +109,7 @@ GitHub Pages 배포 URL을 구글 사이트의 `삽입 > URL`에 넣거나 ifram
 ## 공개 테스트판 검수 체크리스트
 
 - GitHub Pages에서 fetch 오류 없이 문제팩이 불러와지는가?
-- 1~5강 120문제가 정상 로딩되는가?
+- 01팩과 02팩이 각각 120문제로 정상 로딩되는가?
 - 레벨 0, 레벨 1, 레벨 2, 레벨 3, 오답 재도전이 작동하는가?
 - 주관식 aliases 정답 처리가 되는가?
 - 정답 후 핵심, 기억팁, 시험포인트가 각각 분리되어 표시되는가?

@@ -9,6 +9,35 @@
       "level": "기초",
       "free": true,
       "notePdf": "downloads/sonpyeong_pack01_note.pdf"
+    },
+    {
+      "id": "02-06-10",
+      "title": "6~10강 농작물재해보험·손해평가·벼맥류 계산 120제",
+      "file": "data/q_02_06_10.json",
+      "description": "공식암기 코드, 기출형 계산 반복, 절사·반올림·65% 방향·70% 상한·특수보험금 계산을 훈련하는 02팩 정식판",
+      "questionCount": 120,
+      "level": "계산",
+      "free": true,
+      "noteTitle": "02팩 계산형 정리노트",
+      "noteDescription": "처음에는 왕초보 워밍업으로 흐름을 잡고, 공식암기와 기출강화 노트로 계산 반응 속도를 올려보세요.",
+      "noteLinks": [
+        {
+          "label": "왕초보 워밍업 노트 보기",
+          "file": "downloads/sonp_pack02_beginner_warmup_note_v1_final.pdf"
+        },
+        {
+          "label": "공식암기 강의형 노트 보기",
+          "file": "downloads/sonp_pack02_formula_lecture_note_v2_final.pdf"
+        },
+        {
+          "label": "기출강화 실전 노트 보기",
+          "file": "downloads/sonp_pack02_gitul_practice_note_v3_final.pdf"
+        },
+        {
+          "label": "추가 기출문제 50제 보기",
+          "file": "downloads/sonp_pack02_extra_gitul_50_practice_note_v1_final.pdf"
+        }
+      ]
     }
   ]
 }

@@ -59,13 +59,10 @@
       <p class="source-note" id="sourceNote"></p>
       <div class="note-callout" id="modeNotePanel">
         <div>
-          <b>1~5강 단권화 요약 노트</b>
-          <p>처음 보는 용어는 노트로 익숙해지고, 문제에서 바로 꺼내는 순서로 훈련하세요.</p>
+          <b id="modeNoteTitle">정리노트</b>
+          <p id="modeNoteDesc">처음 보는 용어는 노트로 익숙해지고, 문제에서 바로 꺼내는 순서로 훈련하세요.</p>
         </div>
-        <div class="note-actions compact">
-          <a class="secondary-btn note-link" id="modeNoteView" href="#" target="_blank" rel="noopener">1~5강 암기노트 보기</a>
-          <a class="secondary-btn note-link" id="modeNoteDownload" href="#" download>PDF 정리노트 다운로드</a>
-        </div>
+        <div class="note-actions compact" id="modeNoteActions"></div>
       </div>
     </section>
 
@@ -99,10 +96,7 @@
       <button class="text-btn" id="quitBtn" type="button">훈련 종료하고 결과 보기</button>
       <div class="play-note-actions hidden" id="playNotePanel">
         <p>틀린 개념은 노트에서 바로 확인하고 다시 고정하세요.</p>
-        <div class="note-actions compact">
-          <a class="secondary-btn note-link" id="playNoteView" href="#" target="_blank" rel="noopener">PDF 정리노트 보기</a>
-          <a class="secondary-btn note-link" id="playNoteDownload" href="#" download>PDF 정리노트 다운로드</a>
-        </div>
+        <div class="note-actions compact" id="playNoteActions"></div>
       </div>
     </section>
 
@@ -117,10 +111,7 @@
         <div><span>걸린 시간</span><b id="resultTime">0초</b></div>
       </div>
       <p class="note-result-copy">틀린 문제는 PDF 암기노트의 빈칸표와 오답 복습표에서 한 번 더 정리해보세요.</p>
-      <div class="note-actions" aria-label="정리노트 자료">
-        <a class="secondary-btn note-link" id="resultNoteView" href="#" target="_blank" rel="noopener">PDF 정리노트 보기</a>
-        <a class="secondary-btn note-link" id="resultNoteDownload" href="#" download>PDF 정리노트 다운로드</a>
-      </div>
+      <div class="note-actions" id="resultNoteActions" aria-label="정리노트 자료"></div>
       <div class="result-actions">
         <button class="primary-btn" id="retryWrongBtn" type="button">오답 재도전</button>
         <button class="secondary-btn" id="retryDailyBtn" type="button">레벨 1 다시 풀기</button>
