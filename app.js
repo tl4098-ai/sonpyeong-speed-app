@@ -60,6 +60,14 @@ function setNoteActions(id, links){
   if(el) el.innerHTML = renderNoteButtons(links);
 }
 
+function splitLevelGuide(text){
+  const value = String(text || "").trim();
+  if(!value) return { title: "", desc: "" };
+  const match = value.match(/^(.*?)\s(?:\u2014|\u2013|-)\s(.+)$/);
+  if(!match) return { title: value, desc: "" };
+  return { title: match[1].trim(), desc: match[2].trim() };
+}
+
 function normalizeAnswer(value){
   return String(value ?? "")
     .trim()
@@ -196,10 +204,26 @@ async function selectPack(packId){
   $("#selectedPackDesc").textContent = state.selectedPack.description;
   $("#sourceNote").textContent = state.selectedPack.sourceNote || "";
   $("#loadStatus").textContent = "선택 완료";
+  updateModeCards();
   updateWrongLabel();
   updateNoteLinks();
   showOnly("packPanel", "modePanel");
   scrollToPanel("modePanel");
+}
+
+function updateModeCards(){
+  const guide = state.selectedPack?.levelGuide || {};
+  [1,2,3].forEach(level => {
+    const btn = document.querySelector(`[data-mode="level${level}"]`);
+    if(!btn) return;
+    const parsed = splitLevelGuide(guide[String(level)]);
+    const count = questionsByLevel(level).length;
+    const title = parsed.title || `훈련 ${count}제`;
+    const countLabel = `${count}제`;
+    const needsCount = !title.includes(String(count)) && !parsed.desc.includes(String(count));
+    btn.querySelector("b").textContent = `레벨 ${level} ${title}`;
+    btn.querySelector("span").textContent = [needsCount ? countLabel : "", parsed.desc].filter(Boolean).join(" · ");
+  });
 }
 
 function updateNoteLinks(){
