@@ -1,0 +1,14 @@
+{
+  "packs": [
+    {
+      "id": "01-05",
+      "title": "1~5강 기초용어·보험기초 120제",
+      "file": "data/q_01_05.json",
+      "description": "레벨 1 기초 25제, 레벨 2 기출 출제포인트 변형 70제, 레벨 3 예상·실전 25제로 구성한 1~5강 실전 훈련",
+      "questionCount": 120,
+      "level": "기초",
+      "free": true,
+      "notePdf": "downloads/sonpyeong_pack01_note.pdf"
+    }
+  ]
+}

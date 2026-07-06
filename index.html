@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="손해평가사 기초용어와 보험기초 문제팩을 불러오는 스피드훈련 웹앱">
+  <title>손평 스피드훈련</title>
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span>손평</span>스피드훈련</div>
+      <button class="ghost-btn" id="resetWrongBtn" type="button">오답 초기화</button>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <h1>손평 스피드훈련</h1>
+        <p>짧게 보고, 바로 쓰고, 반복해서 시험장 반응 속도를 만듭니다.</p>
+        <div class="hero-line">노트로 익숙해지고, 문제로 꺼내고, 게임으로 빨라집니다.</div>
+        <div class="concept">출제 포인트는 표로 잡고, 기억은 이야기로 고정하고, 게임으로 속도를 만듭니다.</div>
+      </div>
+      <img class="mascot" src="assets/mascot.png" alt="손평 스피드훈련 마스코트">
+    </section>
+
+    <section class="panel" id="packPanel">
+      <div class="section-head">
+        <div>
+          <h2>문제팩 선택</h2>
+          <p>선택한 문제팩만 불러와 가볍게 훈련합니다.</p>
+        </div>
+        <span class="status-pill" id="loadStatus">대기</span>
+      </div>
+      <div class="pack-list" id="packList"></div>
+    </section>
+
+    <section class="panel hidden" id="modePanel">
+      <div class="section-head">
+        <div>
+          <h2 id="selectedPackTitle">훈련 모드 선택</h2>
+          <p id="selectedPackDesc"></p>
+        </div>
+      </div>
+      <div class="level-guidance">
+        처음 보는 용어가 많다면 레벨 0에서 암기노트를 먼저 훑어본 뒤 레벨 1로 들어가세요.
+      </div>
+      <div class="mode-grid">
+        <a class="mode-card level-zero" id="level0NoteLink" href="#" target="_blank" rel="noopener"><b>레벨 0 암기노트 먼저 보기</b><span>처음 보는 용어는 노트로 먼저 익숙하게</span></a>
+        <button class="mode-card" data-mode="level1" type="button"><b>레벨 1 노트 보고 풀기</b><span>기초 단답 25제 · 문항당 10초</span></button>
+        <button class="mode-card" data-mode="level2" type="button"><b>레벨 2 기출 출제포인트 변형</b><span>기출형 70제 · 단답 15초 / OX 12초</span></button>
+        <button class="mode-card" data-mode="level3" type="button"><b>레벨 3 예상·실전 훈련</b><span>예상형 25제 · 문항당 20초</span></button>
+        <button class="mode-card" data-mode="wrong" type="button"><b>오답 재도전</b><span id="wrongCountLabel">저장된 오답 0개 · 문항당 25초</span></button>
+      </div>
+      <p class="source-note" id="sourceNote"></p>
+      <div class="note-callout" id="modeNotePanel">
+        <div>
+          <b>1~5강 단권화 요약 노트</b>
+          <p>처음 보는 용어는 노트로 익숙해지고, 문제에서 바로 꺼내는 순서로 훈련하세요.</p>
+        </div>
+        <div class="note-actions compact">
+          <a class="secondary-btn note-link" id="modeNoteView" href="#" target="_blank" rel="noopener">1~5강 암기노트 보기</a>
+          <a class="secondary-btn note-link" id="modeNoteDownload" href="#" download>PDF 정리노트 다운로드</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="play hidden" id="playPanel">
+      <div class="hud">
+        <div><span>점수</span><b id="scoreText">0</b></div>
+        <div><span>진행</span><b id="progressText">1/10</b></div>
+        <div><span>정답</span><b id="correctText">0</b></div>
+      </div>
+      <div class="timer">
+        <div class="timer-bar"><span id="timerBar"></span></div>
+        <b id="timeText">8초</b>
+      </div>
+      <article class="question-card">
+        <div class="q-meta" id="questionMeta"></div>
+        <h2 id="questionText"></h2>
+        <div class="answer-area" id="answerArea"></div>
+      </article>
+      <section class="feedback hidden" id="feedbackBox">
+        <div class="feedback-head">
+          <b id="feedbackTitle"></b>
+          <span id="feedbackAnswer"></span>
+        </div>
+        <dl class="solution-list">
+          <dt>핵심</dt><dd id="feedbackExplanation"></dd>
+          <dt>기억팁</dt><dd id="feedbackTip"></dd>
+          <dt>시험포인트</dt><dd id="feedbackTrap"></dd>
+        </dl>
+        <button class="primary-btn" id="nextBtn" type="button">다음 문제</button>
+      </section>
+      <button class="text-btn" id="quitBtn" type="button">훈련 종료하고 결과 보기</button>
+      <div class="play-note-actions hidden" id="playNotePanel">
+        <p>틀린 개념은 노트에서 바로 확인하고 다시 고정하세요.</p>
+        <div class="note-actions compact">
+          <a class="secondary-btn note-link" id="playNoteView" href="#" target="_blank" rel="noopener">PDF 정리노트 보기</a>
+          <a class="secondary-btn note-link" id="playNoteDownload" href="#" download>PDF 정리노트 다운로드</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel result hidden" id="resultPanel">
+      <h2>훈련 결과</h2>
+      <div class="grade-badge" id="gradeText"></div>
+      <p class="result-message" id="resultMessage"></p>
+      <div class="result-grid">
+        <div><span>총 문제 수</span><b id="resultTotal">0</b></div>
+        <div><span>정답 수</span><b id="resultCorrect">0</b></div>
+        <div><span>정답률</span><b id="resultRate">0%</b></div>
+        <div><span>걸린 시간</span><b id="resultTime">0초</b></div>
+      </div>
+      <p class="note-result-copy">틀린 문제는 PDF 암기노트의 빈칸표와 오답 복습표에서 한 번 더 정리해보세요.</p>
+      <div class="note-actions" aria-label="정리노트 자료">
+        <a class="secondary-btn note-link" id="resultNoteView" href="#" target="_blank" rel="noopener">PDF 정리노트 보기</a>
+        <a class="secondary-btn note-link" id="resultNoteDownload" href="#" download>PDF 정리노트 다운로드</a>
+      </div>
+      <div class="result-actions">
+        <button class="primary-btn" id="retryWrongBtn" type="button">오답 재도전</button>
+        <button class="secondary-btn" id="retryDailyBtn" type="button">레벨 1 다시 풀기</button>
+        <button class="secondary-btn" id="backHomeBtn" type="button">문제팩 선택으로 돌아가기</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
