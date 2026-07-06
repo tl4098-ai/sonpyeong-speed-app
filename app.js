@@ -199,6 +199,7 @@ async function selectPack(packId){
   updateWrongLabel();
   updateNoteLinks();
   showOnly("packPanel", "modePanel");
+  scrollToPanel("modePanel");
 }
 
 function updateNoteLinks(){
@@ -231,6 +232,14 @@ function updateNoteLinks(){
 function showOnly(...ids){
   ["packPanel","modePanel","playPanel","resultPanel"].forEach(id => $("#" + id).classList.toggle("hidden", !ids.includes(id)));
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function scrollToPanel(id){
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      $("#" + id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
 }
 
 function updateWrongLabel(){
