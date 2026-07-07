@@ -38,6 +38,44 @@
           "file": "downloads/sonp_pack02_extra_gitul_50_practice_note_v1_final.pdf"
         }
       ]
+    },
+    {
+      "id": "03-11-15",
+      "title": "손평게임 03팩｜11~15강 계산중심 최종판",
+      "file": "data/sonp_pack03_level_questions_v1_final.json",
+      "description": "11~15강 범위의 벼·맥류 표본조사·전수조사, 콩·팥, 마늘·양파 수확감소 계산을 OX 스피드훈련으로 반복합니다.",
+      "questionCount": 120,
+      "level": "11~15강",
+      "free": true,
+      "buttonLabel": "03팩 스피드훈련 시작",
+      "noteTitle": "03팩 전용 학습노트",
+      "noteDescription": "01팩 1~5강 기초, 02팩 6~10강 공식·기초계산 흐름을 이어 11~15강 조사방식과 수확감소 밭작물 계산을 강화합니다.",
+      "noteLinks": [
+        {
+          "label": "왕초보 워밍업 노트",
+          "file": "data/sonp_pack03_beginner_warmup_note_v1_final.json",
+          "viewer": "json-note",
+          "description": "11~15강 전체 개념을 처음 보는 수험생용"
+        },
+        {
+          "label": "공식암기 필살노트",
+          "file": "data/sonp_pack03_formula_killer_note_v1_final.json",
+          "viewer": "json-note",
+          "description": "미보상감수량, 피해율, 자기부담, 보험금 계산식 정리"
+        },
+        {
+          "label": "조사판단 필기노트",
+          "file": "data/sonp_pack03_field_judgment_note_v1_final.json",
+          "viewer": "json-note",
+          "description": "표본조사, 전수조사, 콩·팥, 마늘·양파 조사 포인트 정리"
+        },
+        {
+          "label": "실전계산 연습노트",
+          "file": "data/sonp_pack03_calc_practice_note_v1_final.json",
+          "viewer": "json-note",
+          "description": "실제 계산 흐름 반복용"
+        }
+      ]
     }
   ]
 }
